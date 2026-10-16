@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nord">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MCTS, AlphaFold and Logic for Protein Design</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet" type="text/css">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+</head>
+<body class="bg-base-200">
+
+  <main class="max-w-3xl mx-auto px-4 py-12 space-y-10">
+
+    <div>
+      <h1 class="text-4xl font-bold mb-3">Protein design with tree search, structure prediction and logic</h1>
+      <p class="text-lg">A draft idea: Using supervised learning is not always possible, we can use clustering to find properties we never knew existed and currently we will use reinforcement learning using Monte Carlo Tree Search.</p>
+    </div>
+
+    <section class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title text-2xl">MCTS</h2>
+        <p><strong>Role:</strong> the search. Monte Carlo Tree Search decides which partial designs deserve more effort, so expensive scoring is spent on promising branches instead of random ones. A generative model supplies the likely next moves.</p>
+        <p><strong>Why it could help:</strong> it prunes dead ends early and keeps several branches alive, which gives diverse candidates and better use of a fixed compute budget.</p>
+        <p><strong>Bottleneck:</strong> it is sequential and can be slower than massive parallel sampling unless evaluation is batched. Strong baselines such as evolutionary search and Bayesian optimization may match it.</p>
+      </div>
+    </section>
+
+    <section class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title text-2xl">AlphaFold</h2>
+        <p><strong>Role:</strong> this is a model made by google deepmind which can be used alone with first order logic help or with Monte Carlo trees as the reward system. Structure predictors score whether a designed sequence folds and binds as intended.</p>
+        <p><strong>Why it could help:</strong> predictor confidence is currently the strongest practical signal for fold and interaction quality, and it is far cheaper than lab testing.</p>
+        <p><strong>Bottleneck:</strong> while this does help us by giving proteins without labs being needed, it sometimes can give impossible results. A high score is not proof that a design works. AlphaFold 3 is restricted, so open models are needed for high-volume scoring.</p>
+      </div>
+    </section>
+
+    <section class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title text-2xl">Logic</h2>
+        <p><strong>Role:</strong> the model will not work only with structures and possibilities of the protein but also with logic formulae.∀x S(x) &#x21D2; P(x) represents that all proteins with thsi structures belong in some class we care for. This allows us to use a SAT solver to verify our model.<p>
+        <p><strong>With MCTS:</strong> Monte Carlo trees requires some reward system which could be implemented with first order logic alongside your scoring method making it viable making humna statements into model training data.</p>
+        <p><strong>Bottleneck:</strong> ignoring the computaions, the biggest problem is explaining statements to the doctors who never knew what a "for all" is making MLops harder.</p>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
